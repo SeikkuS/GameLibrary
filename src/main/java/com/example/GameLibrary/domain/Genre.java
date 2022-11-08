@@ -12,39 +12,39 @@ import javax.persistence.OneToMany;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-public class Developer {
+public class Genre {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long developerId;
-	private String developerName;
+	private Long genreId;
+	private String genreName;
 	
 	
 	@JsonIgnore
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "developer")
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "genre")
 	private List<Game> games;
 	
-	public Developer() {}
+	public Genre() {}
 
-	public Developer(String developerName) {
+	public Genre(String genreName) {
 		super();
-		this.developerName = developerName;
+		this.genreName = genreName;
 	}
 
-	public Long getDeveloperId() {
-		return developerId;
+	public Long getGenreId() {
+		return genreId;
 	}
 
-	public void setDeveloperId(Long developerId) {
-		this.developerId = developerId;
+	public void setGenreId(Long genreId) {
+		this.genreId = genreId;
 	}
 
-	public String getDeveloperName() {
-		return developerName;
+	public String getGenreName() {
+		return genreName;
 	}
 
-	public void setDeveloperName(String developerName) {
-		this.developerName = developerName;
+	public void setGenreName(String genreName) {
+		this.genreName = genreName;
 	}
 
 	public List<Game> getGames() {

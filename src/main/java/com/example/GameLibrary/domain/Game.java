@@ -17,6 +17,7 @@ public class Game {
 	@NotBlank(message = "This Field Cannot Be Empty")
 	private String name;
 
+	@NotBlank(message = "This Field Cannot Be Empty")
 	private String genre;
 	@PositiveOrZero
 	@Digits(integer=6, fraction=2, message = "Price must be in a 2-decimal format")

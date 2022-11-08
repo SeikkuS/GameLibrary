@@ -25,61 +25,74 @@ public class GameLibController {
     private GameRepository gRepository;
     @Autowired
     private DeveloperRepository devRepository;
-
+    
+    // Ohjaa kirjautumissivulle
     @RequestMapping(value = { "/main", "/home", "/index", "/" })
-    public String homepage(Model model) {
-        return "/homepage";
+    public String loginpage(Model model) {
+        return "/login";
     }
+    
+    @RequestMapping(value= "/login")
+	public String login() {
+		return "login";
+	}
+	
 
-    @RequestMapping(value = { "/games", "/gamelist" })
+    @RequestMapping(value = {"/gamelist" })
     public String gameList(Model model) {
         model.addAttribute("games", gRepository.findAll());
         return "/gamelist";
     }
 
-    // Hae kaikki jonkun valmistajan vaatteet
+    // Hae kaikki jonkun valmistajan pelit
     @RequestMapping(value = { "/gamesByDeveloper/{developer}" })
     public String gameListByDeveloper(@PathVariable("developer") String developer, Model model) {
         model.addAttribute("games", gRepository.findByDeveloper(developer));
         return "/gamelist";
     }
+    
+    // REST 
+    @RequestMapping(value = "/games", method = RequestMethod.GET)
+    public @ResponseBody List<Game> GameListRest() {
+        return (List<Game>) gRepository.findAll();
+    }
 
-   // @RequestMapping(value = "/games", method = RequestMethod.GET)
-   // public @ResponseBody List<Game> GameListRest() {
-   //     return (List<Game>) gRepository.findAll();
-    //}
-
-   // @RequestMapping(value = "/book/{id}", method = RequestMethod.GET)
-    //public @ResponseBody Optional<Garmet> findGarmetRest(@PathVariable("id") Long garmetId) {
-     //   return garmetRepository.findById(garmetId);
-    //}
-
+    @RequestMapping(value = "/game/{id}", method = RequestMethod.GET)
+    public @ResponseBody Optional<Game> findGameRest(@PathVariable("id") Long gameId) {
+    return gRepository.findById(gameId);
+    }
+    
+    // Pelin lisäys
     @RequestMapping(value = "/add")
     public String addGame(Model model) {
         model.addAttribute("game", new Game());
         model.addAttribute("developers", devRepository.findAll());
-        return "/addGame";
+        return "/addgame";
     }
 
+    // Pelin tallennus
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public String save(@ModelAttribute("game") @Valid Game game, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return "/addGame";
+            return "/addgame";
         }
         gRepository.save(game);
-        return "redirect:/games";
+    // ohjataan takaisin listaan
+        return "redirect:/gamelist";
     }
-
+    
+    // Delete -ominaisuus -ohjataan takaisin listaan lopuksi
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
     public String deleteGame(@PathVariable("id") Long gameId, Model model) {
         gRepository.deleteById(gameId);
-        return "redirect:/games";
+        return "redirect:/gamelist";
     }
 
+    // Edit -ominaisuus
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
     public String editGame(@PathVariable("id") Long gameId, Model model) {
         model.addAttribute("game", gRepository.findById(gameId));
         model.addAttribute("developers", devRepository.findAll());
-        return "/editGame";
+        return "/editgame";
     }
 }

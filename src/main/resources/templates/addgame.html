@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
+<title>Add Game</title>
+</head>
+<body>
+
+	<h1>Add New Game</h1>
+	<h2>Fill out the information below</h2>
+	<div>
+		<form th:object="${game}" th:action="@{save}" action="#" method="post">
+			<table>
+				<tr>
+					<td><label for="name">Nimi:</label> </td>
+					<td><input type="text" th:field="*{name}" /> </td>
+					<td th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></td>
+				</tr>
+				<tr>
+					<td><label for="genre">Genre:</label> </td>
+					<td>
+						<select id="genreList" th:field="*{genre}" class="form-control">
+							<option th:each="genre: ${genres}" th:value="${genre.genreName}" th:text="${genre.genreName}"></option>
+						</select> 
+					</td>
+					<td th:if="${#fields.hasErrors('genre')}" th:errors="*{genre}"></td>
+				</tr>
+				<tr>
+					<td><label for="price">Price:</label> </td>
+					<td><input type="text" th:field="*{price}" /> </td>
+					<td th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></td>
+				</tr>
+				<tr>
+					<td><label for="developer">Developer:</label> </td>
+					<td><input type="text" th:field="*{developer}" /> </td>
+					<td th:if="${#fields.hasErrors('developer')}" th:errors="*{developer}"></td>
+				</tr>
+				
+				<input type="submit" value="Add Game To Library" class="btn btn-success"></input>
+			</table>
+		</form>
+	</div>
+
+</body>

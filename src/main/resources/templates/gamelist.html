@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" >
+<head>
+<meta charset="UTF-8">
+<link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
+<title>My Library</title>
+</head>
+<body>
+	<h1>My Games</h1>
+	<table class="table table-stiped">
+		<tbody>
+		
+			<tr>
+				<td><b>Name</b></td>
+				<td><b>Genre</b></td>
+				<td><b>Price</b></td>
+				<td><b>Developer</b></td>
+				<td></td>
+				<td></td>
+				
+			</tr>
+			<tr th:each = "gamelist : ${games}">
+				<td th:text="${gamelist.name}"></td>
+				<td th:text="${gamelist.genre}"></td>
+				<td th:text="${gamelist.price}"></td>
+
+				<td><a th:href="@{/gamesByDeveloper/{developer}(developer=${gamelist.developer})}" th:text="${gamelist.developer}"></a></td>
+					<td><a th:href="@{/delete/{id}(id=${gamelist.id})}" class="btn btn-danger">Delete</a></td> 
+					<td><a th:href="@{/edit/{id}(id=${gamelist.id})}" class="btn btn-success">Edit</a></td>  
+				
+			</tr>
+		
+		</tbody>
+	</table>
+	<a href="/add" class="btn btn-primary">Add Game</a> 
+	<a href="/main" class="btn btn-primary">Return to Homepage</a>
+	
+	
+
+
+</body>
+</html>
