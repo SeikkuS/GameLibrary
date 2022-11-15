@@ -19,7 +19,7 @@
 		 <label for="genre">Genre:</label>
 		  <td>
 		 	<select id="genreList" th:field="*{genre}" class="form-control">
-		 		<option th:each="genre: ${genres}" th:value="${genre.genreId}" th:text="${genre.genreName}"></option>
+		 		<option th:each="genre: ${genres}" th:value="${genre.genreName}" th:text="${genre.genreName}"></option>
 		 	</select> 
 		 </td>
 		 
