@@ -11,6 +11,8 @@ import com.example.GameLibrary.domain.Developer;
 import com.example.GameLibrary.domain.DeveloperRepository;
 import com.example.GameLibrary.domain.Genre;
 import com.example.GameLibrary.domain.GenreRepository;
+import com.example.GameLibrary.domain.UserRepository;
+import com.example.GameLibrary.domain.Useri;
 @SpringBootApplication
 public class GameLibraryApplication {
 
@@ -18,16 +20,21 @@ public class GameLibraryApplication {
 		SpringApplication.run(GameLibraryApplication.class, args);
 	}
 	@Bean
-	public CommandLineRunner gameDemo(GameRepository gRepository, DeveloperRepository devRepository, GenreRepository genRepository) {
+	public CommandLineRunner gameDemo(GameRepository gRepository, DeveloperRepository devRepository, GenreRepository genRepository, UserRepository uRepository) {
 		return (args) -> {
+			
+			//yksi esimerkki peli
 			gRepository.save(new Game("Crysis", "Action, Shooter, FPS", 20.00, "Crytek"));
 		
+			//Tallennetaan pelinvalmistajat
 			devRepository.save(new Developer("Crytek"));
 			devRepository.save(new Developer("Bethesda Game Studios"));
 			devRepository.save(new Developer("Riot Games"));
 			devRepository.save(new Developer("Valve"));
 			devRepository.save(new Developer("2K"));
 			
+			
+			//Tallennetaan valmiiksi eri genret
 			genRepository.save(new Genre ("Horror"));
 			genRepository.save(new Genre ("Action"));
 			genRepository.save(new Genre ("FPS"));
@@ -49,6 +56,10 @@ public class GameLibraryApplication {
 			genRepository.save(new Genre ("Racing"));
 			genRepository.save(new Genre ("Military"));
 			genRepository.save(new Genre ("VR Titles"));
+			
+			//Luodaan Admin -käyttäjä
+			Useri admin = new Useri("admin", "$2a$10$0MMwY.IQqpsVc1jC8u7IJ.2rT8b0Cd3b3sfIBGV2zfgnPGtT4r0.C", "ADMIN", "");
+			uRepository.save(admin);
 			
 			
 		
